@@ -8,7 +8,9 @@ import 'dart:convert';
 
 class DataService {
   static final DataService _singleton = DataService._internal();
-  final String apiUrl = "http://192.168.1.8:8000";
+
+  // final String apiUrl = "http://192.168.1.8:8000";
+  final String apiUrl = "https://gym.inferno-team.cloud";
   final String route = "/api";
 
   factory DataService() {
@@ -101,6 +103,28 @@ class DataService {
     //   print('something wrong $e');
     // return LoginResponse(
     //     status: false, parent: Parent.empty(), message: "Login Error");
+  }
+
+  Future<Response> register(
+    String email,
+    String password,
+    String name,
+    String? phone,
+  ) async {
+    var registerRoute = '/register';
+
+    final Uri uri = Uri.parse(apiUrl + route + registerRoute);
+    return await _createPostRequest(
+      uri: uri,
+      body: {
+        'email': email,
+        'password': password,
+        'phone': phone ?? '',
+        'name': name
+      },
+      key: 'login',
+      fromJson: (j) => LoginType.fromJson(j),
+    );
   }
 
   Future<Response> getAllGyms(String token) async {

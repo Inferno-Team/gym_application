@@ -6,17 +6,24 @@ import 'package:gym_application/ui/home/home_binding.dart';
 import 'package:gym_application/ui/home/home_page.dart';
 import 'package:gym_application/ui/login/login_binding.dart';
 import 'package:gym_application/ui/login/login_page.dart';
+import 'package:gym_application/ui/register/register_binding.dart';
+import 'package:gym_application/ui/register/register_page.dart';
 
 import 'package:gym_application/utils/constances.dart';
 import 'package:gym_application/utils/storage_helper.dart';
 
 List<GetPage> getPages() {
   return [
-
     GetPage(
       name: PagesRouteConst.loginPageRoute,
       page: () => LoginPage(),
       binding: LoginBinding(),
+      transition: Transition.zoom,
+    ),
+    GetPage(
+      name: PagesRouteConst.registerPageRoute,
+      page: () => RegisterPage(),
+      binding: RegisterBindings(),
       transition: Transition.zoom,
     ),
     GetPage(

@@ -6,11 +6,13 @@ import 'package:gym_application/ui/custom_widget/custom_text.dart';
 class CustomGym extends StatelessWidget {
   final Gym gym;
   final void Function()? onTap;
+  final double height;
 
-  const CustomGym({
+  CustomGym({
     super.key,
     required this.gym,
     this.onTap,
+    this.height = 170.0,
   });
 
   @override

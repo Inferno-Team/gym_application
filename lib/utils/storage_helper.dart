@@ -31,8 +31,10 @@ class StorageHelper {
   static Locale? getLanguage() {
     String? lang = getSavedLanguage();
     print(lang);
+    //null safety
     if (lang == null) {
-      _changeLanguage(Get.deviceLocale?.languageCode ?? 'en');
+      String? ln = Get.deviceLocale?.languageCode;
+      _changeLanguage(ln ?? 'en');
       return Get.deviceLocale;
     }
     if (lang == 'ar') {

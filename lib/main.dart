@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           : PagesRouteConst.loginPageRoute,
       theme: myLightTheme(),
       darkTheme: myDarkTheme(),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       initialBinding: InitialGetBinding(),
       translations: LanguageTranslator(),
       locale: StorageHelper.getLanguage(),

@@ -46,6 +46,7 @@ class HomePage extends GetView<HomeController> {
                       ],
                     ),
                     child: SingleChildScrollView(
+                      physics:const NeverScrollableScrollPhysics(),
                       child: Column(
                         children: [
                           const SizedBox(
@@ -76,7 +77,7 @@ class HomePage extends GetView<HomeController> {
                             ),
                           ),
                           SizedBox(
-                            height: size.height - 150,
+                            height: size.height-1,
                             child: Navigator(
                               key: Get.nestedKey(1),
                               initialRoute: '/home-screen',

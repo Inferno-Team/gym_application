@@ -8,6 +8,7 @@ class CustomText extends StatelessWidget {
   final EdgeInsets margin;
   final FontWeight fontWeight;
   final bool isItalic;
+  final void Function()? onTap;
 
   const CustomText({
     Key? key,
@@ -18,20 +19,24 @@ class CustomText extends StatelessWidget {
     this.margin = EdgeInsets.zero,
     this.fontWeight = FontWeight.normal,
     this.isItalic = false,
+    this.onTap
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: alignment,
-      margin: margin,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        alignment: alignment,
+        margin: margin,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: color,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
+          ),
         ),
       ),
     );

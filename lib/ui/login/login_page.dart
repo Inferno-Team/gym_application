@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:gym_application/gen/assets.gen.dart';
 import 'package:gym_application/ui/login/login_viewmodel.dart';
@@ -88,6 +89,7 @@ class LoginPage extends GetWidget<LoginViewModel> {
                     ),
                     Obx(
                       () => Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CustomButton2(
                             text: Keys.LOGIN.name.tr,
@@ -111,7 +113,24 @@ class LoginPage extends GetWidget<LoginViewModel> {
                               : const SizedBox(
                                   width: 25,
                                   height: 25,
-                                )
+                                ),
+                          Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const CustomText(
+                                text: "Don't have account yet?",
+                                fontSize: 13,
+                                margin: EdgeInsets.only(left: 20),
+                              ),
+                              CustomText(
+                                text: "Register Now",
+                                fontSize: 13,
+                                color: Colors.pinkAccent,
+                                margin: const EdgeInsets.only(left: 20),
+                                onTap: controller.gotoRegisterPage,
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),

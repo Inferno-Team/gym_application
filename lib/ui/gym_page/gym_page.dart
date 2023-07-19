@@ -19,24 +19,42 @@ class GymPage extends GetView<GymsController> {
           const SizedBox(
             height: 10,
           ),
-          CustomGym(gym: controller.selectedGym),
-          const SizedBox(
-            height: 10,
+          CustomGym(
+            gym: controller.selectedGym,
           ),
+
           Container(
-            height: size.height - 400,
-            margin: const EdgeInsets.all(20),
-            child: MapboxMap(
-              styleString: MapboxStyles.MAPBOX_STREETS,
-              accessToken:
-                  "pk.eyJ1IjoibW9oYW1tZWRpc3NhIiwiYSI6ImNrd2NnajFvaDEycGkydXFsdmRxaW1wNm4ifQ.9isSyfCXqGrAN2-AjM46hA",
-              onMapCreated: controller.onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: controller.convertGym2LatLng(controller.selectedGym),
-                zoom: 15
-              ),
-            ),
-          )
+            height: size.height - 300,
+            margin: const EdgeInsets.all(10),
+            child: !controller.isMyLocationLoading
+                ? ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    child: MapboxMap(
+                      styleString: MapboxStyles.DARK,
+                      accessToken:
+                          "pk.eyJ1IjoibW9oYW1tZWRpc3NhIiwiYSI6ImNrd2NnajFvaDEycGkydXFsdmRxaW1wNm4ifQ.9isSyfCXqGrAN2-AjM46hA",
+                      onMapCreated: controller.onMapCreated,
+                      initialCameraPosition: CameraPosition(
+                          target: controller
+                              .convertGym2LatLng(controller.selectedGym),
+                          zoom: 11),
+                    ),
+                  )
+                : const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: CircularProgressIndicator(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
         ],
       ),
     );

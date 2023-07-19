@@ -1,9 +1,6 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:gym_application/repositories/data_service.dart';
 import 'package:gym_application/ui/gym_page/gym_page.dart';
 import 'package:gym_application/ui/gyms/gyms_bindings.dart';
@@ -23,6 +20,7 @@ class HomeController extends GetxController {
   final _direction = TextDirection.ltr.obs;
   final _directionString = 'ltr'.obs;
   final _currentRoute = ''.obs;
+  final _currentPath = ''.obs;
 
   String get currentRoute => _currentRoute.value;
 
@@ -40,18 +38,22 @@ class HomeController extends GetxController {
 
   void gotoGyms() {
     toggleMenu();
-    changeCurrentRoute('/home/gym');
+    changeCurrentRoute('gyms');
     Get.toNamed(PagesRouteConst.gymsPageRoute, id: 1);
   }
 
-  void changeCurrentRoute(String value) => _currentRoute.value = value;
+  void changeCurrentRoute(String value) {
+    _currentPath.value += "/$value";
+    _currentRoute.value = value;
+  }
 
   @override
   void onInit() {
     _direction.value = StorageHelper.getTextDirection();
     _directionString.value = StorageHelper.getTextDirection().name;
     _calcShadowOffset();
-    _currentRoute.value = '/home';
+    _currentPath.value = '/home';
+    _currentRoute.value = 'home';
     super.onInit();
   }
 
@@ -120,10 +122,10 @@ class HomeController extends GetxController {
   }
 
   Future<bool> onBackPressed() async {
-    final routes = currentRoute.split('/');
+    final routes = _currentPath.split('/');
     print(routes.length);
     if (routes.length > 2) {
-      _currentRoute.value = '';
+      _currentPath.value = '';
       // state: nesting
       // remove last route name.
       routes.removeAt(0);
@@ -131,9 +133,9 @@ class HomeController extends GetxController {
 
       // rebuild the route
       for (var element in routes) {
-        _currentRoute.value += '/$element';
+        _currentPath.value += '/$element';
       }
-      print(currentRoute);
+      print(_currentPath);
     } else {
       return true;
     }
