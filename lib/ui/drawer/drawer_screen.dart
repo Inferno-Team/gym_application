@@ -34,13 +34,14 @@ class DrawerScreen extends GetView<HomeController> {
                     onClick: controller.gotoGyms,
                   ),
                   CustomDrawerItem(
-                    icon: Icons.no_food_sharp,
-                    text: Keys.My_diets.name.tr,
-                    fontSize: 14,
-                  ),
-                  CustomDrawerItem(
                     icon: Icons.fastfood,
                     text: Keys.Diets.name.tr,
+                    fontSize: 14,
+                    onClick: controller.gotoAllDiets,
+                  ),
+                  CustomDrawerItem(
+                    icon: Icons.no_food_sharp,
+                    text: Keys.My_diets.name.tr,
                     fontSize: 14,
                   ),
                   CustomDrawerItem(

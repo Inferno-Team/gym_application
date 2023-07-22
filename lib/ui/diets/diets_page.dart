@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:gym_application/models/gym.dart';
-import 'package:gym_application/ui/custom_widget/custom_gym_widget.dart';
+import 'package:gym_application/models/diet_model.dart';
 import 'package:gym_application/ui/custom_widget/custom_text.dart';
-import 'package:gym_application/ui/gyms/gyms_viewmodel.dart';
+import 'package:gym_application/ui/diets/diets_viewmodel.dart';
 
-class GymsPage extends GetView<GymsController> {
+class DietsPage extends GetView<DietsViewModel> {
+  const DietsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Obx(() {
       if (controller.response.code == -1) {
         // loading state
@@ -26,15 +24,15 @@ class GymsPage extends GetView<GymsController> {
             ),
           ],
         );
-      } else if (controller.response.code == 200) {
+      }
+      else if (controller.response.code == 200) {
         // there is data
         return ListView.builder(
           itemBuilder: (context, index) {
-            Gym? gym = controller.response.data?[index];
-            if (gym == null) return Container();
-            return CustomGym(
-              gym: gym,
-              onTap: () => controller.onGymTap(gym),
+            DietModel? model = controller.response.data?[index];
+            if (model == null) return Container();
+            return CustomText(
+              text: model.name,
             );
           },
           itemCount: controller.response.data?.length,

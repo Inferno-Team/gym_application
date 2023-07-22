@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_application/repositories/data_service.dart';
+import 'package:gym_application/ui/diets/diets_bindings.dart';
+import 'package:gym_application/ui/diets/diets_page.dart';
 import 'package:gym_application/ui/gym_page/gym_page.dart';
 import 'package:gym_application/ui/gyms/gyms_bindings.dart';
 import 'package:gym_application/ui/gyms/gyms_page.dart';
@@ -40,6 +41,12 @@ class HomeController extends GetxController {
     toggleMenu();
     changeCurrentRoute('gyms');
     Get.toNamed(PagesRouteConst.gymsPageRoute, id: 1);
+  }
+
+  void gotoAllDiets() {
+    toggleMenu();
+    changeCurrentRoute('diets');
+    Get.toNamed(PagesRouteConst.dietsPageRoute, id: 1);
   }
 
   void changeCurrentRoute(String value) {
@@ -113,7 +120,14 @@ class HomeController extends GetxController {
     } else if (settings.name == PagesRouteConst.gymPageRoute) {
       return GetPageRoute(
         settings: settings,
-        page: () => GymPage(),
+        page: () => const GymPage(),
+        transition: Transition.zoom,
+      );
+    } else if (settings.name == PagesRouteConst.dietsPageRoute) {
+      return GetPageRoute(
+        settings: settings,
+        page: () => const DietsPage(),
+        binding: DietsBinding(),
         transition: Transition.zoom,
       );
     } else {

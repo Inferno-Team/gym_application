@@ -10,6 +10,7 @@ class PagesRouteConst {
   static const String loginPageRoute = '/login';
   static const String registerPageRoute = '/register';
   static const String gymsPageRoute = '/gyms';
+  static const String dietsPageRoute = '/diets';
   static const String gymPageRoute = '/gym';
   static const String homeScreenRoute = '/home-screen';
 }
