@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:gym_application/gen/assets.gen.dart';
+import 'package:gym_application/models/check_if_user_subscribed_model.dart';
+import 'package:gym_application/models/club_subscription.dart';
+import 'package:gym_application/ui/custom_widget/bottom_sheet_club_subs.dart';
 import 'package:gym_application/utils/languages_translator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,6 +20,9 @@ class GymsController extends GetxController {
   final StorageHelper helper;
   final DataService dataService;
   final _isMyLocationLoading = false.obs;
+  final _isUserSubscribedToSelectedGym = DataResponse<CheckIfSub>.empty().obs;
+  late final Location location;
+  late final LocationData myLocation;
 
   GymsController({required this.helper, required this.dataService});
 
@@ -32,10 +38,15 @@ class GymsController extends GetxController {
 
   bool get isMyLocationLoading => _isMyLocationLoading.value;
 
+  bool get isUserSubscribed =>
+      _isUserSubscribedToSelectedGym.value.data?.value ?? false;
+
   final Duration duration = const Duration(milliseconds: 300);
 
   @override
   void onInit() async {
+    location = Location();
+    myLocation = await location.getLocation();
     String token = helper.getToken();
     var response = await dataService.getAllGyms(token);
     if (response.code == 200) {
@@ -45,16 +56,16 @@ class GymsController extends GetxController {
   }
 
   void onGymTap(Gym gym) async {
-    final location = Location();
-    final hasPermissions = await location.hasPermission();
-    if (hasPermissions != PermissionStatus.granted) {
+    bool hasPermission = await _checkPermission();
+
+    if (!hasPermission) {
       PermissionStatus status = await location.requestPermission();
       if (status != PermissionStatus.granted) return;
     }
-
     _selectedGym.value = gym;
     Get.find<HomeController>().changeCurrentRoute('gym');
     Get.toNamed(PagesRouteConst.gymPageRoute, id: 1);
+    await checkIfUserSubscribed();
     // Timer(const Duration(seconds: 3), () {
     //   // animationController.forward(from: 0);
     //   // animationController.animateTo(target);
@@ -72,7 +83,6 @@ class GymsController extends GetxController {
   }
 
   void onMapCreated(MapboxMapController? controller) async {
-    final location = Location();
     _mapController.value = controller;
     LatLng latLng = convertGym2LatLng(selectedGym);
     _mapController.value?.animateCamera(
@@ -80,7 +90,7 @@ class GymsController extends GetxController {
         latLng,
       ),
     );
-    LocationData myLocation = await location.getLocation();
+
     var markerImage = await loadMarkerImage(Assets.images.backgroundImage.path);
     var myLocationImage = await loadMarkerImage(Assets.images.location.path);
     await _mapController.value?.addImage('gym', markerImage);
@@ -114,4 +124,41 @@ class GymsController extends GetxController {
     _isMyLocationLoading.value = false;
   }
 
+  Future<bool> _checkPermission() async {
+    final hasPermissions = await location.hasPermission();
+    return hasPermissions == PermissionStatus.granted;
+  }
+
+  checkIfUserSubscribed() async {
+    String token = helper.getToken();
+    var response =
+        await dataService.checkIfUserSubscribed(token, selectedGym.id);
+    if (response.code == 200) {
+      _isUserSubscribedToSelectedGym.value =
+          response as DataResponse<CheckIfSub>;
+    }
+  }
+
+  void onSubscribeClick() async {
+    // get all this gym subscription types
+    String token = helper.getToken();
+    int id = selectedGym.id;
+    var response = await dataService.getClubSubscription(token, id);
+    if (response.code == 200) {
+      var res = response as DataResponse<List<ClubSubScription>>;
+      Get.bottomSheet(
+        BottomSheetClubSubscription(
+          subs: res.data,
+          onTap: onSubscribeTypeTap,
+        ),
+        isScrollControlled: true,
+        isDismissible: false
+      );
+    }
+  }
+
+  void onSubscribeTypeTap(ClubSubScription sub) {
+
+    Get.back();
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_application/models/diet_model.dart';
+import 'package:gym_application/ui/custom_widget/custom_diet.dart';
 import 'package:gym_application/ui/custom_widget/custom_text.dart';
 import 'package:gym_application/ui/diets/diets_viewmodel.dart';
 
@@ -24,21 +25,20 @@ class DietsPage extends GetView<DietsViewModel> {
             ),
           ],
         );
-      }
-      else if (controller.response.code == 200) {
+      } else if (controller.response.code == 200) {
         // there is data
         return ListView.builder(
           itemBuilder: (context, index) {
             DietModel? model = controller.response.data?[index];
             if (model == null) return Container();
-            return CustomText(
-              text: model.name,
+            return CustomDiet(
+              diet: model,
+              onTap:()=> controller.gotoDietPage(model),
             );
           },
           itemCount: controller.response.data?.length,
         );
-      }
-      else {
+      } else {
         // error
         // show error msg
         return Column(

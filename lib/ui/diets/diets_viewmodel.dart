@@ -22,4 +22,8 @@ class DietsViewModel extends GetxController {
     }
     super.onInit();
   }
+
+  gotoDietPage(DietModel model) {
+
+  }
 }

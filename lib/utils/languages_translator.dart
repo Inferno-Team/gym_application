@@ -21,6 +21,7 @@ class LanguageTranslator extends Translations {
       Keys.TOGGLE_LANGUAGE.name: "اللغة",
       Keys.Logout.name: "تسجيل الخروج",
       Keys.MYLOCATION.name: "موقعي",
+      Keys.ItemCount.name: "عدد العناصر",
     },
     "en_US": {
       Keys.LANGUAGE.name: 'العربية',
@@ -38,6 +39,8 @@ class LanguageTranslator extends Translations {
       Keys.TOGGLE_LANGUAGE.name: 'Language',
       Keys.Logout.name: 'Logout',
       Keys.MYLOCATION.name: 'My Location',
+      Keys.ItemCount.name: "Item Count",
+
     }
   };
 
@@ -61,4 +64,5 @@ enum Keys {
   Diets,
   Logout,
   MYLOCATION,
+  ItemCount
 }

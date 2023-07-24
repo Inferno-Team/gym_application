@@ -14,47 +14,71 @@ class GymPage extends GetView<GymsController> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Obx(
-      () => Column(
+      () => Stack(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
-          CustomGym(
-            gym: controller.selectedGym,
-          ),
-
-          Container(
-            height: size.height - 300,
-            margin: const EdgeInsets.all(10),
-            child: !controller.isMyLocationLoading
-                ? ClipRRect(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    child: MapboxMap(
-                      styleString: MapboxStyles.DARK,
-                      accessToken:
-                          "pk.eyJ1IjoibW9oYW1tZWRpc3NhIiwiYSI6ImNrd2NnajFvaDEycGkydXFsdmRxaW1wNm4ifQ.9isSyfCXqGrAN2-AjM46hA",
-                      onMapCreated: controller.onMapCreated,
-                      initialCameraPosition: CameraPosition(
-                          target: controller
-                              .convertGym2LatLng(controller.selectedGym),
-                          zoom: 11),
-                    ),
-                  )
-                : const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 25,
-                        height: 25,
-                        child: CircularProgressIndicator(
-                          color: Colors.blue,
+          Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              CustomGym(
+                gym: controller.selectedGym,
+              ),
+              Container(
+                height: size.height - 300,
+                margin: const EdgeInsets.all(10),
+                child: !controller.isMyLocationLoading
+                    ? ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
                         ),
+                        child: MapboxMap(
+                          styleString: MapboxStyles.DARK,
+                          accessToken:
+                              "pk.eyJ1IjoibW9oYW1tZWRpc3NhIiwiYSI6ImNrd2NnajFvaDEycGkydXFsdmRxaW1wNm4ifQ.9isSyfCXqGrAN2-AjM46hA",
+                          onMapCreated: controller.onMapCreated,
+                          initialCameraPosition: CameraPosition(
+                              target: controller
+                                  .convertGym2LatLng(controller.selectedGym),
+                              zoom: 11),
+                        ),
+                      )
+                    : const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 25,
+                            height: 25,
+                            child: CircularProgressIndicator(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+              ),
+            ],
           ),
+          controller.isUserSubscribed
+              ? Positioned(
+                  top: 155,
+                  right: 30,
+                  child: GestureDetector(
+                    onTap: controller.onSubscribeClick,
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(22.5),
+                        color: Colors.black.withAlpha(140),
+                      ),
+                      child: const Icon(
+                        Icons.subscriptions_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );
