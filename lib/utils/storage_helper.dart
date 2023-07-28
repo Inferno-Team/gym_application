@@ -13,7 +13,10 @@ class StorageHelper {
 
   static bool isLoggedIn() {
     GetStorage storage = GetStorage();
-    print(storage.read(LANGUAGE_VALUE));
+    // print(storage.read(LANGUAGE_VALUE));
+    // if(storage.read(LOGIN_STATE) == null)
+    //   return false;
+    // else return storage.read(LOGIN_STATE);
     return storage.read(LOGIN_STATE) ?? false;
   }
 

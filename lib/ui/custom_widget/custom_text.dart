@@ -10,17 +10,17 @@ class CustomText extends StatelessWidget {
   final bool isItalic;
   final void Function()? onTap;
 
-  const CustomText({
-    Key? key,
-    this.text = '',
-    this.color = Colors.black,
-    this.fontSize = 16,
-    this.alignment = Alignment.topLeft,
-    this.margin = EdgeInsets.zero,
-    this.fontWeight = FontWeight.normal,
-    this.isItalic = false,
-    this.onTap
-  }) : super(key: key);
+  const CustomText(
+      {Key? key,
+      this.text = '',
+      this.color = Colors.black,
+      this.fontSize = 16,
+      this.alignment = Alignment.topLeft,
+      this.margin = EdgeInsets.zero,
+      this.fontWeight = FontWeight.normal,
+      this.isItalic = false,
+      this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,7 @@ class CustomText extends StatelessWidget {
         margin: margin,
         child: Text(
           text,
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: color,
             fontSize: fontSize,

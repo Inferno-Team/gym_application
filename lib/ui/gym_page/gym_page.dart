@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:gym_application/models/gym.dart';
 import 'package:gym_application/ui/custom_widget/custom_gym_widget.dart';
-import 'package:gym_application/ui/custom_widget/custom_text.dart';
 import 'package:gym_application/ui/gyms/gyms_viewmodel.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
@@ -59,7 +56,8 @@ class GymPage extends GetView<GymsController> {
             ],
           ),
           controller.isUserSubscribed
-              ? Positioned(
+              ? Container()
+              : Positioned(
                   top: 155,
                   right: 30,
                   child: GestureDetector(
@@ -77,8 +75,7 @@ class GymPage extends GetView<GymsController> {
                       ),
                     ),
                   ),
-                )
-              : Container(),
+                ),
         ],
       ),
     );

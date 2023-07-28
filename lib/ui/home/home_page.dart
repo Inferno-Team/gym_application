@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:gym_application/ui/custom_widget/custom_text.dart';
 import 'package:gym_application/ui/drawer/drawer_screen.dart';
 import 'package:gym_application/ui/home/home_viewmodel.dart';
+import 'package:gym_application/utils/constances.dart';
 import 'package:gym_application/utils/languages_translator.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -80,7 +81,7 @@ class HomePage extends GetView<HomeController> {
                             height: size.height-1,
                             child: Navigator(
                               key: Get.nestedKey(1),
-                              initialRoute: '/home-screen',
+                              initialRoute: PagesRouteConst.homeScreenRoute,
                               onGenerateRoute: controller.onGenerateRoute,
                             ),
                           ),

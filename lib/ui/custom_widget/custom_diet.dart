@@ -13,7 +13,7 @@ class CustomDiet extends StatelessWidget {
   const CustomDiet({
     super.key,
     required this.diet,
-    required this.onTap,
+    this.onTap,
     this.height = 170.0,
   });
 
@@ -48,8 +48,8 @@ class CustomDiet extends StatelessWidget {
               fontSize: 21,
               fontWeight: FontWeight.bold,
             ),
-             // const SizedBox(height: 9,),
-             CustomText(
+            // const SizedBox(height: 9,),
+            CustomText(
               text: diet.trainerName,
               color: Colors.white,
               alignment: Alignment.topLeft,

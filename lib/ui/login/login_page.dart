@@ -10,7 +10,8 @@ import 'package:gym_application/ui/custom_widget/custom_text.dart';
 import 'package:gym_application/utils/languages_translator.dart';
 
 class LoginPage extends GetWidget<LoginViewModel> {
-  final _formKey = GlobalKey<FormState>();
+
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {

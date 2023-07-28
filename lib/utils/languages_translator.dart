@@ -22,6 +22,12 @@ class LanguageTranslator extends Translations {
       Keys.Logout.name: "تسجيل الخروج",
       Keys.MYLOCATION.name: "موقعي",
       Keys.ItemCount.name: "عدد العناصر",
+
+      Keys.Id.name: "رقم تسلسلي",
+      Keys.Ingredient.name: "مكون",
+      Keys.Quantity.name: "الكمية",
+      Keys.No_Fav.name: "يجب ان تقوم بالاعجاب ببعض الحميات والمحاولة لاحقا.",
+
     },
     "en_US": {
       Keys.LANGUAGE.name: 'العربية',
@@ -40,6 +46,10 @@ class LanguageTranslator extends Translations {
       Keys.Logout.name: 'Logout',
       Keys.MYLOCATION.name: 'My Location',
       Keys.ItemCount.name: "Item Count",
+      Keys.Id.name: "Id",
+      Keys.Ingredient.name: "Ingredient",
+      Keys.Quantity.name: "Quantity",
+      Keys.No_Fav.name: "You need to add some diets to your favourite and try again.",
 
     }
   };
@@ -64,5 +74,9 @@ enum Keys {
   Diets,
   Logout,
   MYLOCATION,
-  ItemCount
+  ItemCount,
+  Id,
+  Ingredient,
+  Quantity,
+  No_Fav
 }

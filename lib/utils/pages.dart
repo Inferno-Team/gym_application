@@ -1,14 +1,11 @@
 import 'package:get/get.dart';
 import 'package:gym_application/repositories/data_service.dart';
-import 'package:gym_application/ui/gyms/gyms_bindings.dart';
-import 'package:gym_application/ui/gyms/gyms_page.dart';
 import 'package:gym_application/ui/home/home_binding.dart';
 import 'package:gym_application/ui/home/home_page.dart';
 import 'package:gym_application/ui/login/login_binding.dart';
 import 'package:gym_application/ui/login/login_page.dart';
 import 'package:gym_application/ui/register/register_binding.dart';
 import 'package:gym_application/ui/register/register_page.dart';
-
 import 'package:gym_application/utils/constances.dart';
 import 'package:gym_application/utils/storage_helper.dart';
 
@@ -16,19 +13,19 @@ List<GetPage> getPages() {
   return [
     GetPage(
       name: PagesRouteConst.loginPageRoute,
-      page: () => LoginPage(),
+      page: () => const LoginPage(),
       binding: LoginBinding(),
       transition: Transition.zoom,
     ),
     GetPage(
       name: PagesRouteConst.registerPageRoute,
-      page: () => RegisterPage(),
+      page: () => const RegisterPage(),
       binding: RegisterBindings(),
       transition: Transition.zoom,
     ),
     GetPage(
-        name: '/home',
-        page: () => HomePage(),
+        name: PagesRouteConst.homePageRoute,
+        page: () => const HomePage(),
         binding: HomeBindings(),
         transition: Transition.zoom),
   ];

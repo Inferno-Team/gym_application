@@ -20,10 +20,20 @@ class DietModel {
   factory DietModel.fromJson(Map<String, dynamic> json) => DietModel(
         id: json['id'] ?? 0,
         name: json['name'] ?? '',
-        itemsCount: json['itemsCount'] ?? 0,
-        customerCount: json['customerCount'] ?? 0,
+        itemsCount: json['items_count'] ?? 0,
+        customerCount: json['customer_count'] ?? 0,
         gym: json['gym'] ?? '',
         trainerName: json['tainer_name'] ?? "",
         background: json['background'] ?? "",
+      );
+
+  factory DietModel.empty() => DietModel(
+        id: 0,
+        name: '',
+        itemsCount: 0,
+        customerCount: 0,
+        gym: '',
+        trainerName: "",
+        background: "",
       );
 }

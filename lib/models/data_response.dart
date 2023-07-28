@@ -18,9 +18,9 @@ class DataResponse<Type> extends Response {
     );
   }
 
-  factory DataResponse.empty() => DataResponse(
+  factory DataResponse.empty({data}) => DataResponse(
         code: -1,
-        data: null,
+        data: data,
         msg: '',
       );
 }

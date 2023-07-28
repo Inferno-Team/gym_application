@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:gym_application/models/diet_model.dart';
 import 'package:gym_application/ui/custom_widget/custom_diet.dart';
 import 'package:gym_application/ui/custom_widget/custom_text.dart';
-import 'package:gym_application/ui/diets/diets_viewmodel.dart';
+import 'package:gym_application/ui/my_diets/my_diets_viewmodel.dart';
+import 'package:gym_application/utils/languages_translator.dart';
 
-class DietsPage extends GetView<DietsViewModel> {
-  const DietsPage({super.key});
+class MyDietsPage extends GetView<MyDietsViewModel> {
+  const MyDietsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,17 @@ class DietsPage extends GetView<DietsViewModel> {
           ],
         );
       } else if (controller.response.code == 200) {
+        if (controller.response.data!.isEmpty) {
+          return Center(
+            child: CustomText(
+              text: Keys.No_Fav.name.tr,
+              color: Colors.black45,
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              alignment: Alignment.center,
+            ),
+          );
+        }
         // there is data
         return ListView.builder(
           itemBuilder: (context, index) {
@@ -33,7 +46,7 @@ class DietsPage extends GetView<DietsViewModel> {
             if (model == null) return Container();
             return CustomDiet(
               diet: model,
-              onTap:()=> controller.gotoDietPage(model),
+              onTap: () => controller.gotoDietPage(model),
             );
           },
           itemCount: controller.response.data?.length,

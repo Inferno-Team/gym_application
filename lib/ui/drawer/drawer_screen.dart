@@ -43,6 +43,7 @@ class DrawerScreen extends GetView<HomeController> {
                     icon: Icons.no_food_sharp,
                     text: Keys.My_diets.name.tr,
                     fontSize: 14,
+                    onClick: controller.gotoMyDiets,
                   ),
                   CustomDrawerItem(
                     icon: Icons.language,

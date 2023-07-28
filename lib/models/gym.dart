@@ -20,12 +20,13 @@ class Gym {
   });
 
   factory Gym.fromJson(dynamic json) => Gym(
-      id: json['id'] ?? -1,
-      name: json['name'] ?? '',
-      location: json['location'] ?? '',
-      pos: json['pos'],
-      manager: User.fromJson(json['manager']),
-      image: json['image']);
+        id: json['id'] ?? -1,
+        name: json['name'] ?? '',
+        location: json['location'] ?? '',
+        pos: json['pos'],
+        manager: User.fromJson(json['manager']),
+        image: json['image'],
+      );
 
   factory Gym.empty() => Gym(
         id: -1,
@@ -41,7 +42,7 @@ class Gym {
       'name': name,
       'pos': pos.toString(),
       'manager': manager.toJson(),
-      'location': location
+      'location': location,
     };
     return json.encode(values);
   }

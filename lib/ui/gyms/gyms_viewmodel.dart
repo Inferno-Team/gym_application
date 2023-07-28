@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gym_application/gen/assets.gen.dart';
 import 'package:gym_application/models/check_if_user_subscribed_model.dart';
 import 'package:gym_application/models/club_subscription.dart';
+import 'package:gym_application/models/user_subscription.dart';
 import 'package:gym_application/ui/custom_widget/bottom_sheet_club_subs.dart';
 import 'package:gym_application/utils/languages_translator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -20,7 +21,9 @@ class GymsController extends GetxController {
   final StorageHelper helper;
   final DataService dataService;
   final _isMyLocationLoading = false.obs;
-  final _isUserSubscribedToSelectedGym = DataResponse<CheckIfSub>.empty().obs;
+  final _isUserSubscribedToSelectedGym = DataResponse<CheckIfSub>.empty(
+    data: CheckIfSub.empty()
+  ).obs;
   late final Location location;
   late final LocationData myLocation;
 
@@ -132,7 +135,7 @@ class GymsController extends GetxController {
   checkIfUserSubscribed() async {
     String token = helper.getToken();
     var response =
-        await dataService.checkIfUserSubscribed(token, selectedGym.id);
+        await dataService.checkIfUserSubscribed(token, selectedGym.id,false);
     if (response.code == 200) {
       _isUserSubscribedToSelectedGym.value =
           response as DataResponse<CheckIfSub>;
@@ -147,18 +150,19 @@ class GymsController extends GetxController {
     if (response.code == 200) {
       var res = response as DataResponse<List<ClubSubScription>>;
       Get.bottomSheet(
-        BottomSheetClubSubscription(
-          subs: res.data,
-          onTap: onSubscribeTypeTap,
-        ),
-        isScrollControlled: true,
-        isDismissible: false
-      );
+          BottomSheetClubSubscription(
+            subs: res.data,
+            onTap: onSubscribeTypeTap,
+          ),
+          isScrollControlled: true,
+          isDismissible: false);
     }
   }
 
-  void onSubscribeTypeTap(ClubSubScription sub) {
-
+  void onSubscribeTypeTap(ClubSubScription sub) async {
+    String token = helper.getToken();
+    var response = await dataService.customerSubscribe(token, sub.id);
+    Fluttertoast.showToast(msg: response.msg);
     Get.back();
   }
 }

@@ -25,9 +25,7 @@ class MyApp extends StatelessWidget {
       initialRoute: isLoggedIn
           ? PagesRouteConst.homePageRoute
           : PagesRouteConst.loginPageRoute,
-      theme: myLightTheme(),
-      darkTheme: myDarkTheme(),
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       initialBinding: InitialGetBinding(),
       translations: LanguageTranslator(),
       locale: StorageHelper.getLanguage(),
