@@ -34,6 +34,19 @@ class DrawerScreen extends GetView<HomeController> {
                     onClick: controller.gotoGyms,
                   ),
                   CustomDrawerItem(
+                    icon: Icons.subscriptions_sharp,
+                    text: Keys.MySubscriptions.name.tr,
+                    fontSize: 14,
+                    onClick: controller.gotoMySubs,
+                    // onClick: controller.gotoGyms,
+                  ),
+                  CustomDrawerItem(
+                    icon: Icons.qr_code,
+                    text: Keys.Attend.name.tr,
+                    fontSize: 14,
+                    onClick: controller.makeAttend,
+                  ),
+                  CustomDrawerItem(
                     icon: Icons.fastfood,
                     text: Keys.Diets.name.tr,
                     fontSize: 14,

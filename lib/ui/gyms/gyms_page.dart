@@ -26,7 +26,8 @@ class GymsPage extends GetView<GymsController> {
             ),
           ],
         );
-      } else if (controller.response.code == 200) {
+      }
+      else if (controller.response.code == 200) {
         // there is data
         return ListView.builder(
           itemBuilder: (context, index) {

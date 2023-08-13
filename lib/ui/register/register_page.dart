@@ -48,7 +48,7 @@ class RegisterPage extends GetWidget<RegisterViewModel> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: size.height * 0.07,
+                        height: size.height * 0.065,
                       ),
                       CustomText(
                         text: Keys.REGISER.name.tr,

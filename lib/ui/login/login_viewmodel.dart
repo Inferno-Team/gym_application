@@ -21,7 +21,7 @@ class LoginViewModel extends GetxController {
 
   final _passwordState = true.obs;
   final _loginButtonState = false.obs;
-  final _emailHolder = ''.obs;
+  final Rx<String> _emailHolder = Rx<String>('');
   final _passwordHolder = ''.obs;
   final _errorBag = Errors.empty().obs;
 
@@ -46,6 +46,8 @@ class LoginViewModel extends GetxController {
       _emailHolder.value,
       _passwordHolder.value,
     );
+
+
     _loginButtonState.value = !_loginButtonState.value;
 
     if (response.code == 200) {

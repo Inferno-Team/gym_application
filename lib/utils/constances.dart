@@ -15,6 +15,7 @@ class PagesRouteConst {
   static const String myDietsPageRoute = '/my-diets';
   static const String gymPageRoute = '/gym';
   static const String homeScreenRoute = '/home-screen';
+  static const String mySubsScreenRoute = '/my-subs';
 }
 
 ThemeData myLightTheme() {

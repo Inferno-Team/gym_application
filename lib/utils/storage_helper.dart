@@ -33,7 +33,7 @@ class StorageHelper {
 
   static Locale? getLanguage() {
     String? lang = getSavedLanguage();
-    print(lang);
+    // print(lang);
     //null safety
     if (lang == null) {
       String? ln = Get.deviceLocale?.languageCode;

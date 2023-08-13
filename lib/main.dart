@@ -30,9 +30,7 @@ class MyApp extends StatelessWidget {
       translations: LanguageTranslator(),
       locale: StorageHelper.getLanguage(),
       fallbackLocale: const Locale('en', 'US'),
-      builder: (context, child) {
-        return child ?? Container();
-      },
+      builder: (context, child) => child ?? Container(),
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:gym_application/models/error_response.dart';
+import 'package:gym_application/models/message_response.dart';
 import 'package:gym_application/repositories/data_service.dart';
 import 'package:gym_application/ui/diet/diet_bindings.dart';
 import 'package:gym_application/ui/diet/diet_page.dart';
@@ -11,8 +14,12 @@ import 'package:gym_application/ui/gyms/gyms_page.dart';
 import 'package:gym_application/ui/home/home_screen.dart';
 import 'package:gym_application/ui/my_diets/my_diet_bindings.dart';
 import 'package:gym_application/ui/my_diets/my_diets_page.dart';
+import 'package:gym_application/ui/my_subs/my_sub_binding.dart';
+import 'package:gym_application/ui/my_subs/my_subs_page.dart';
 import 'package:gym_application/utils/constances.dart';
 import 'package:gym_application/utils/storage_helper.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:gym_application/models/response.dart' as res;
 
 class HomeController extends GetxController {
   final StorageHelper helper;
@@ -110,7 +117,7 @@ class HomeController extends GetxController {
 
   void logout() {
     helper.logout();
-    Get.toNamed(PagesRouteConst.loginPageRoute);
+    Get.offAndToNamed(PagesRouteConst.loginPageRoute);
   }
 
   Route? onGenerateRoute(RouteSettings settings) {
@@ -154,13 +161,21 @@ class HomeController extends GetxController {
         binding: MyDietsBinding(),
         transition: Transition.zoom,
       );
+    } else if (settings.name == PagesRouteConst.mySubsScreenRoute) {
+      return GetPageRoute(
+        settings: settings,
+        page: () => MySubPage(),
+        binding: MySubBinding(),
+        transition: Transition.zoom,
+      );
     } else {
       return null;
     }
   }
 
   Future<bool> onBackPressed() async {
-    final routes = _currentPath.split('/');
+    final routes =
+        _currentPath.split('/'); // /home/gyms/gym => ['',home,gyms,gym]
     print(routes.length);
     if (routes.length > 2) {
       _currentPath.value = '';
@@ -171,7 +186,7 @@ class HomeController extends GetxController {
 
       // rebuild the route
       for (var element in routes) {
-        _currentPath.value += '/$element';
+        _currentPath.value += '/$element'; // /home , /home/gyms
       }
       print(_currentPath);
     } else {
@@ -183,4 +198,32 @@ class HomeController extends GetxController {
   }
 
   HomeController({required this.helper, required this.dataService});
+
+  void makeAttend() async {
+    String? id = await scanner.scan();
+    String token = helper.getToken();
+    if (id == null) {
+      Fluttertoast.showToast(msg: "something went wrong please try again.");
+      return;
+    }
+    try {
+      int _id = int.parse(id);
+      res.Response response = await dataService.makeAttend(token, _id);
+      if (response.code == 200) {
+        MessageResponse messageResponse = response as MessageResponse;
+        Fluttertoast.showToast(msg: messageResponse.msg);
+      } else {
+        ErrorResponse errorResponse = response as ErrorResponse;
+        Fluttertoast.showToast(msg: errorResponse.msg);
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "please can a correct QR");
+    }
+  }
+
+  void gotoMySubs() {
+    toggleMenu();
+    changeCurrentRoute('gyms');
+    Get.toNamed(PagesRouteConst.mySubsScreenRoute,id: 1);
+  }
 }

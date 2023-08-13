@@ -21,9 +21,8 @@ class GymsController extends GetxController {
   final StorageHelper helper;
   final DataService dataService;
   final _isMyLocationLoading = false.obs;
-  final _isUserSubscribedToSelectedGym = DataResponse<CheckIfSub>.empty(
-    data: CheckIfSub.empty()
-  ).obs;
+  final _isUserSubscribedToSelectedGym =
+      DataResponse<CheckIfSub>.empty(data: CheckIfSub.empty()).obs;
   late final Location location;
   late final LocationData myLocation;
 
@@ -69,12 +68,6 @@ class GymsController extends GetxController {
     Get.find<HomeController>().changeCurrentRoute('gym');
     Get.toNamed(PagesRouteConst.gymPageRoute, id: 1);
     await checkIfUserSubscribed();
-    // Timer(const Duration(seconds: 3), () {
-    //   // animationController.forward(from: 0);
-    //   // animationController.animateTo(target);
-    //   // _gymBoxHeight.value = 250.0;
-    //   Fluttertoast.showToast(msg: "changed");
-    // });
   }
 
   LatLng convertGym2LatLng(Gym selectedGym) =>
@@ -89,9 +82,7 @@ class GymsController extends GetxController {
     _mapController.value = controller;
     LatLng latLng = convertGym2LatLng(selectedGym);
     _mapController.value?.animateCamera(
-      CameraUpdate.newLatLng(
-        latLng,
-      ),
+      CameraUpdate.newLatLng(latLng),
     );
 
     var markerImage = await loadMarkerImage(Assets.images.backgroundImage.path);
@@ -100,17 +91,18 @@ class GymsController extends GetxController {
     await _mapController.value?.addImage('myLocationImage', myLocationImage);
     await _mapController.value?.addSymbol(
       SymbolOptions(
-          draggable: false,
-          geometry: LatLng(
-            myLocation.latitude ?? 0.0,
-            myLocation.longitude ?? 0.0,
-          ),
-          iconSize: 0.15,
-          iconImage: "myLocationImage",
-          textField: Keys.MYLOCATION.name.tr,
-          textOffset: const Offset(0.0, 2),
-          textColor: "white",
-          textSize: 12),
+        draggable: false,
+        geometry: LatLng(
+          myLocation.latitude ?? 0.0,
+          myLocation.longitude ?? 0.0,
+        ),
+        iconSize: 0.15,
+        iconImage: "myLocationImage",
+        textField: Keys.MYLOCATION.name.tr,
+        textOffset: const Offset(0.0, 2),
+        textColor: "white",
+        textSize: 12,
+      ),
     );
     await _mapController.value?.addSymbol(
       SymbolOptions(
@@ -135,7 +127,7 @@ class GymsController extends GetxController {
   checkIfUserSubscribed() async {
     String token = helper.getToken();
     var response =
-        await dataService.checkIfUserSubscribed(token, selectedGym.id,false);
+        await dataService.checkIfUserSubscribed(token, selectedGym.id, false);
     if (response.code == 200) {
       _isUserSubscribedToSelectedGym.value =
           response as DataResponse<CheckIfSub>;

@@ -27,7 +27,10 @@ class LanguageTranslator extends Translations {
       Keys.Ingredient.name: "مكون",
       Keys.Quantity.name: "الكمية",
       Keys.No_Fav.name: "يجب ان تقوم بالاعجاب ببعض الحميات والمحاولة لاحقا.",
-
+      Keys.MySubscriptions.name: "اشتراكاتي",
+      Keys.Attend.name: "تسجيل حضور",
+      Keys.Active.name: "فعال",
+      Keys.Not_Active.name: "غير فعال",
     },
     "en_US": {
       Keys.LANGUAGE.name: 'العربية',
@@ -50,6 +53,10 @@ class LanguageTranslator extends Translations {
       Keys.Ingredient.name: "Ingredient",
       Keys.Quantity.name: "Quantity",
       Keys.No_Fav.name: "You need to add some diets to your favourite and try again.",
+      Keys.MySubscriptions.name: "My Subscriptions",
+      Keys.Attend.name: "Attend",
+      Keys.Active.name: "Active",
+      Keys.Not_Active.name: "Not Active",
 
     }
   };
@@ -78,5 +85,9 @@ enum Keys {
   Id,
   Ingredient,
   Quantity,
-  No_Fav
+  No_Fav,
+  MySubscriptions,
+  Attend,
+  Active,
+  Not_Active
 }

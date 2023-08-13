@@ -7,6 +7,7 @@ import 'package:gym_application/models/error_response.dart';
 import 'package:gym_application/models/gym.dart';
 import 'package:gym_application/models/login_type.dart';
 import 'package:gym_application/models/message_response.dart';
+import 'package:gym_application/models/my_sub_model.dart';
 import 'package:gym_application/models/response.dart';
 import 'package:gym_application/models/user_eat_table_model.dart';
 import 'package:gym_application/models/user_subscription.dart';
@@ -14,7 +15,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class DataService {
-  static final DataService _singleton = DataService._internal(debugMode: true);
+  static final DataService _singleton = DataService._internal(debugMode: false);
 
   // final String apiUrl = "http://192.168.1.8:8000";
   late final String baseUrl;
@@ -26,7 +27,7 @@ class DataService {
 
   DataService._internal({debugMode = false}) {
     baseUrl = debugMode
-        ? "http://192.168.1.11:8000"
+        ? "http://192.168.1.7:8000"
         : "https://gym.inferno-team.cloud";
   }
 
@@ -59,18 +60,19 @@ class DataService {
     return Response.empty();
   }
 
-  Future<Response> _createPostRequest<Type>(
-      {uri,
-      body,
-      headers,
-      Type Function(dynamic j)? fromJson,
-      required String key}) async {
+  Future<Response> _createPostRequest<Type>({
+    uri,
+    body,
+    headers,
+    Type Function(dynamic j)? fromJson,
+    String key = '',
+  }) async {
     var string_body = '';
     try {
       http.Response response =
           await http.post(uri, body: body, headers: headers);
       string_body = response.body;
-      var jsonData = await json.decode(response.body);
+      var jsonData = await json.decode(response.body); // Map<String,dynamic>
       var initResponse = Response.fromJson(jsonData);
 
       if (initResponse.code == 200) {
@@ -96,7 +98,8 @@ class DataService {
   Future<Response> login(String email, String password) async {
     var loginRoute = '/login';
 
-    final Uri uri = Uri.parse(baseUrl + apiURL + loginRoute);
+    final Uri uri =
+        Uri.parse(baseUrl + apiURL + loginRoute); // url: http://ip/api/login
     return await _createPostRequest(
       uri: uri,
       body: {'email': email, 'password': password},
@@ -304,6 +307,31 @@ class DataService {
       params: {'id': "$id"},
       key: 'items',
       fromJson: (j) => (j as List).map((e) => DietItem.fromJson(e)).toList(),
+    );
+  }
+
+  Future<Response> makeAttend(String token, int id) async {
+    var route = '/attend';
+    final url = baseUrl + apiURL + route;
+    return await _createPostRequest(
+      uri: Uri.parse(url),
+      headers: {
+        "Authorization": "Bearer $token",
+      },
+      body: {'club_id': "$id"},
+    );
+  }
+
+  Future<Response> getMySubs(String token) async {
+    var route = '/get-my-subscription';
+    final url = baseUrl + apiURL + route;
+    return await _createGetRequest<List<MySubModel>>(
+      url: url,
+      headers: {
+        "Authorization": "Bearer $token",
+      },
+      key: "subs",
+      fromJson: (j) => (j as List).map((e) => MySubModel.fromJson(e)).toList(),
     );
   }
 }
